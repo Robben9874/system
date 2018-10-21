@@ -62,3 +62,17 @@ client.on('message', message => {
   })
 }
 });
+
+client.on('ready', () => {
+   console.log(`----------------`);
+      console.log(`Desert Bot- Script By : Diamond Codes`);
+        console.log(`----------------`);
+      console.log(`ON ${client.guilds.size} Servers '     Script By : Diamond Codes ' `);
+    console.log(`----------------`);
+  console.log(`Logged in as ${client.user.tag}!`);
+client.user.setGame(`Sea World System`,"http://twitch.tv/S-F")
+client.user.setStatus("online")
+ 
+});
+
+client.login(process.env.BOT_TOKEN);
