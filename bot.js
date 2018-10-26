@@ -202,20 +202,19 @@ message.channel.send("``لا تستطيع سحب "+ message.mentions.members.fir
 message.react("❌")
  }}});
 
-client.on('message', message => {
-  if (message.author.bot) return;
-  if (!message.content.startsWith(prefix)) return;
-
-  let command = message.content.split(" ")[0];
-  command = command.slice(prefix.length);
-
-  let args = message.content.split(" ").slice(1);
-
-  if (command == "!!say") {
-   message.channel.sendMessage(args.join("  "))
-   message.delete()
-  }
- });
+client.on('message', m => {
+    var prefix = "!!"
+    if (m.content.startsWith(prefix + 'say')) {
+        var args = m.content.split(" ");
+        var str = ``
+        if (!args[1]) {
+            str+=`You Have To Type Something ..`
+        } else {
+            str+=args.join(" ").slice(args[1].length);
+        };
+        m.channel.send(str);
+    };
+});
 
 client.on("message", (Duy0) => {
   if (Duy0.content.startsWith('!!delete')) {
