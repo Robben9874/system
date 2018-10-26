@@ -279,10 +279,6 @@ client.on('message', message => {
     }
   });
 
-const d = require("discord.js");
-const fs = require("fs");
-var json = JSON.parse(fs.readFileSync("json.json", "utf8"));
-
 client.on("message", (message) => {
     var command = message.content.split(" ")[0];
     command = command.slice(prefix.length);
