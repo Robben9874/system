@@ -191,48 +191,39 @@ message.channel.send("``لا تستطيع سحب "+ message.mentions.members.fir
 message.react("❌")
  }}});
 
-const jackeo = ['504685669847662623' , '420287914149150731' , '383711936174620672' , '370142013980540929'];
-client.on('message', message => { 
-var prefix = "البرفركس";
+client.on('message', message => {
   if (message.author.bot) return;
-  if (!message.content.startsWith(prefix)) return; 
-    var argresult = message.content.split(` `).slice(1).join(' '); 
-      if (!jackeo.includes(message.author.id)) return;
-  let command = message.content.split(" ")[0]; 
+  if (!message.content.startsWith(prefix)) return;
+
+  let command = message.content.split(" ")[0];
   command = command.slice(prefix.length);
-  let args = message.content.split(" ").slice(1); 
-  if (command === "say")  { 
-  if(!message.channel.guild) return message.reply('** __This command only for servers⛔__  **'); 
-          message.delete() 
-    message.channel.sendMessage(args.join(" ")).catch(console.error); 
+
+  let args = message.content.split(" ").slice(1);
+
+if (command == "!!say") {
+if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.reply("*لا تملك الصلاحيات المطلوبه**");
+
+message.channel.send(args.join("  "))
+    message.delete();
   }
-if (command == "emb")    { 
-  if(!message.channel.guild) return message.reply('** __This command only for servers⛔__  **'); //Jackeo  حقوقي
-    let say = new Discord.RichEmbed()
-    .setDescription(args.join("  "))
-    .setColor("RANDOM")
-    message.channel.sendEmbed(say);
-    message.delete(); 
-  } 
+
+if(!args) return message.channel.send('!say <words>');
+
 });
 
-client.on('guildMemberAdd', Sal => {
-    var embed = new Discord.RichEmbed()
-    .setAuthor(Sal.user.username, Sal.user.avatarURL)
-    .setThumbnail(Sal.user.avatarURL)
-    .setImage('https://cdn.discordapp.com/attachments/504670132002357248/505379590806568970/20181025_184601.png') //هنا حط الصوره الي تبيها
-    .setTitle('عضو جديد!')
-    .setDescription('مرحبا بك بالسيرفر')
-    .addField('``ايدي العضو``:',"" +  Sal.user.id, true)
-    .addField('``تاق العضو``', Sal.user.discriminator, true)
-    .addField('``تم الانشاء في``', Sal.user.createdAt, true)
-    .addField(' 👤  انت رقم',`**[ ${Sal.guild.memberCount} ]**`,true)
-    .setColor('RANDOM')
-    .setFooter(Sal.guild.name, Sal.guild.iconURL, true)
-    var channel =Sal.guild.channels.find('name', 'chat') 
-    if (!channel) return;
-    channel.send({embed : embed});
-    });
+client.on("guildMemberAdd", msg => {
+  var AlphaE = new Discord.RichEmbed()
+.setColor("RANDOM")
+.setAuthor(msg.user.username, msg.user.avatarURL)
+.setThumbnail(msg.user.avatarURL)
+.setTitle(`
+مرحبا بك في السيرفر
+`)
+.addField("نورتنا :rose:", `${msg.user.tag}`, true)
+.addField("اتمنى ان تتفاعل يا عسل", `${msg.user.tag}`, true)
+ .setFooter(msg.user.tag, msg.user.avatarURL, true)
+msg.user.sendMessage(AlphaE);
+});
 
 client.on('message', message => {
     if(message.content.includes('discord.gg')){
@@ -243,46 +234,6 @@ client.on('message', message => {
     }
 }
 });
-
-client.on('message', message => {
-        var prefix = "!!";
-        if(message.content.startsWith(prefix + 'mutevoice')) {
-          if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.sendMessage("**ليس لديك صلاحية لاعطاء ميوت صوتي**❌ ").then(m => m.delete(5000));
-          if(!message.guild.member(client.user).hasPermission("MUTE_MEMBERS")) return message.reply("**I Don't Have `MUTE_MEMBERS` Permission**").then(msg => msg.delete(6000))
-           
-        if(message.mentions.users.size === 0) {
-          return message.reply("Please mention a user to mute.");
-        }
-        let muteMember = message.guild.member(message.mentions.users.first());
-        if(!muteMember) {
-          return message.reply("Try again.");
-        }
-        muteMember.setMute(true);
-        if(muteMember) {
-          message.channel.sendMessage("User muted successfully.");
-        }
-      }
-    });
-
-client.on('message', message => {
-      var prefix = "!!";
-      if(message.content.startsWith(prefix + 'unmutevoice')) {
-        if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.sendMessage("**ليس لديك صلاحية لاعطاء ميوت صوتي**❌ ").then(m => m.delete(5000));
-        if(!message.guild.member(client.user).hasPermission("MUTE_MEMBERS")) return message.reply("**I Don't Have `MUTE_MEMBERS` Permission**").then(msg => msg.delete(6000))
-         
-      if(message.mentions.users.size === 0) {
-        return message.reply("Please mention a user to mute.");
-      }
-      let muteMember = message.guild.member(message.mentions.users.first());
-      if(!muteMember) {
-        return message.reply("Try again.");
-      }
-      muteMember.setMute(false);
-      if(muteMember) {
-        message.channel.sendMessage("User muted successfully.");
-      }
-    }
-  });
 
 client.on("message", (message) => {
     var command = message.content.split(" ")[0];
@@ -448,10 +399,10 @@ ${prefix}help-en
      
             اختر:
  
-!!help-gn-ar ⇏ اوامر عامة
-!!help-ad-ar ⇏ اوامر ادارة السيرفر
+!!help-gn-ar  ⇏ اوامر عامة
+!!help-ad-ar  ⇏ اوامر ادارة السيرفر
              
-!!help-mu-ar ⇏ اوامر الموسيقى
+!!help-mu-ar  ⇏ اوامر الموسيقى
 `)
 message.channel.sendEmbed(embed)
  
@@ -466,11 +417,11 @@ client.on("message", message => {
          
               Chose:
                
-   !!help-gn-en ⇏ General commands
+   !!help-gn-en  ⇏ General commands
    
-   !!help-ad-en ⇏ Server management commands
+   !!help-ad-en  ⇏ Server management commands
                
-   !!help-mu-en ⇏ Music commands
+   !!help-mu-en  ⇏ Music commands
    
    
    `)
@@ -488,15 +439,15 @@ client.on("message", message => {
       .setDescription(`
              
 ===================== اوامر عامة =====================
-!!id ➾ معلومات عن حسابك
+!!id  ➾ معلومات عن حسابك
 !!avatar ➾ يظهر صورة بروفابلك
 !!server ➾ معلومات عن السيرفر
 !!bot ➾ معلومات عن البوت
-!!ping ➾ لمعرفة سرعة نتك
+!!ping  ➾ لمعرفة سرعة نتك
 =========================================================
 وقريباً المزيد من الاكواد
 =========================================================
-Support server : //discord.gg/sjHQUj
+Support server : https://discord.gg/sjHQUj
 `)
    message.author.sendEmbed(embed)
    
@@ -1060,246 +1011,5 @@ client.on("message", async message => {
       }
     });
 
-client.on('message', async message => { // Alpha Codes Server.
-    if(message.author.bot) return;
-    if(message.channel.type === 'dm') return;
- 
-    var prefix = '!!'; //<==== تقدر تغير البرفكس
-    var args = message.content.toLowerCase().split(" "); // Alpha Codes Server.
-    var command = args[0];
- 
-  if(command == prefix + 'bc') {
-        if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(':no_entry: | You dont have **ADMINISTRATOR** Permission!'); // Alpha Codes Server.
-        if(!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.channel.send(':no_entry: | I dont have **EMBED_LINKS** Permission!');
-       
-        let bcCommand = new Discord.RichEmbed()
-        .setTitle(':white_check_mark: **BroadCast Command.**')
-        .setColor('GREEN')
-        .setDescription(`**\n${prefix}bc <MESSAGE>**\n➥ \`\`Send for all members the message.\`\`\n\n**${prefix}bc <ROLE> <MESSAGE>**\n➥ \`\`Send the message to members have the role selected.\`\`\n\n**${prefix}bc admins <MESSAGE>**\n➥ \`\`Send the message to members have ADMINISTRATOR permission.\`\`\n\n**${prefix}bc members <MESSAGE>**\n➥ \`\`Send the message to members not have ADMINISTRATOR permission.\`\``)
-        .setTimestamp()
-        .setFooter(message.author.tag, message.author.avatarURL)
-       
-        if(!args[1]) return message.channel.send(bcCommand); // Alpha Codes Server.
-       
-        var getRole = message.mentions.roles.first() || message.guild.roles.find(r => r.id === args[1]) || message.guild.roles.find(r => r.name.toLowerCase().includes(args[1]));
-       
-        if(args[1] === 'admins' || args[1] === 'members' || getRole) {
-            var argsM = message.content.split(' ').slice(2).join(' ');
-        }else if(args[1] !== 'admins' || args[1] !== 'members' || !getRole) { // Alpha Codes Server.
-            var argsM = message.content.split(' ').slice(1).join(' ');
-        }
-       
-        if(args[1] === 'admins' || args[1] === 'members') {
-            if(args[1] === 'admins') {
-                var admin = message.guild.members.filter(m => m.hasPermission('ADMINISTRATOR') && !m.user.bot);
-                if(admin.size <= 1) return message.channel.send(':no_entry: | No admins in this server!');
-               
-                let notArgsM = new Discord.RichEmbed()
-                .setTitle(':white_check_mark: **BroadCast Command.** (ADMINISTRATOR)')
-                .setColor('GREEN')
-                .setDescription(`**\n${prefix}bc admins <MESSAGE>**\n➥ \`\`Send the message to members have ADMINISTRATOR permission.\`\``)
-                .setTimestamp()
-                .setFooter(message.author.tag, message.author.avatarURL) // Alpha Codes Server.
-               
-                if(!argsM) return message.channel.send(notArgsM);
-               
-                let adminMsg = new Discord.RichEmbed()
-                .setTitle(':white_check_mark: **BroadCast Command.** (ADMINISTRATOR)')
-                .setColor('GREEN')
-                .setDescription(`**\n**:red_circle: Are you sure to send the message to **${admin.size}** Admins?\n\n**➥ Message:**\n${argsM}`)
-                .setTimestamp()
-                .setFooter(message.author.tag, message.author.avatarURL) // Alpha Codes Server.
-               
-                message.channel.send(adminMsg).then(msgB => {
-                    msgB.react('✅').then(() => msgB.react('❎'))
-                   
-                    let sendR = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
-                    let dontSendR = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
-                    let send = msgB.createReactionCollector(sendR);
-                    let dontSend = msgB.createReactionCollector(dontSendR);
-                   
-                    send.on('collect', r => {
-                        msgB.delete();
-                        message.channel.send(`:timer: | Wait some time to send the message to **${admin.size}** Admins ...`).then(msg => {
-                            admin.forEach(async a => { // Alpha Codes Server.
-                                let bcMessage = new Discord.RichEmbed()
-                                .setTitle(`:loudspeaker: ${a.user.username}`)
-                                .setColor('GREEN')
-                                .addField(':pencil: **Sender:**', message.author.username, true)
-                                .addField(':globe_with_meridians: **Server:**', message.guild.name, true)
-                                .addField(':scroll: **Message:**', argsM.replace('[user]', a))
-                                .setTimestamp()
-                                .setFooter(message.author.tag, message.author.avatarURL)
-                               
-                                a.send(bcMessage)
-                                await msg.edit(`:white_check_mark: | <@${message.author.id}> Successfully send the message to **${admin.size}** Admins!`);
-                            })
-                        })
-                    })
-                    dontSend.on('collect', r => {
-                        msgB.delete(); // Alpha Codes Server.
-                        message.channel.send(':negative_squared_cross_mark: | The command has been canceld.').then(msg => msg.delete(5000));
-                    })
-                })
-            }else if(args[1] === 'members') {
-                var member = message.guild.members.filter(m => !m.hasPermission('ADMINISTRATOR') && !m.user.bot);
-                if(member.size === 0) return message.channel.send(':no_entry: | No members in this server!');
-               
-                let notArgsM = new Discord.RichEmbed()
-                .setTitle(':white_check_mark: **BroadCast Command.** (MEMBER)')
-                .setColor('GREEN')
-                .setDescription(`**\n${prefix}bc members <MESSAGE>**\n➥ \`\`Send the message to members not have ADMINISTRATOR permission.\`\``)
-                .setTimestamp() // Alpha Codes Server.
-                .setFooter(message.author.tag, message.author.avatarURL)
-               
-                if(!argsM) return message.channel.send(notArgsM);
-               
-                let memberMsg = new Discord.RichEmbed()
-                .setTitle(':white_check_mark: **BroadCast Command.** (MEMBER)')
-                .setColor('GREEN')
-                .setDescription(`**\n**:red_circle: Are you sure to send the message to **${member.size}** Members?\n\n**➥ Message:**\n${argsM}`)
-                .setTimestamp()
-                .setFooter(message.author.tag, message.author.avatarURL)
-               
-                message.channel.send(memberMsg).then(msgB => {
-                    msgB.react('✅').then(() => msgB.react('❎'))
-                    // Alpha Codes Server.
-                    let sendR = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
-                    let dontSendR = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
-                    let send = msgB.createReactionCollector(sendR);
-                    let dontSend = msgB.createReactionCollector(dontSendR);
-                   
-                    send.on('collect', r => {
-                        msgB.delete();
-                        message.channel.send(`:timer: | Wait some time to send the message to **${member.size}** Members ...`).then(msg => {
-                            member.forEach(async m => {
-                                let bcMessage = new Discord.RichEmbed()
-                                .setTitle(`:loudspeaker: ${m.user.username}`)
-                                .setColor('GREEN')
-                                .addField(':pencil: **Sender:**', message.author.username, true)
-                                .addField(':globe_with_meridians: **Server:**', message.guild.name, true)
-                                .addField(':scroll: **Message:**', argsM.replace('[user]', m))
-                                .setTimestamp()
-                                .setFooter(message.author.tag, message.author.avatarURL)
-                               
-                                m.send(bcMessage) // Alpha Codes Server.
-                                await msg.edit(`:white_check_mark: | <@${message.author.id}> Successfully send the message to **${member.size}** Members!`);
-                            })
-                        })
-                    })
-                    dontSend.on('collect', r => {
-                        msgB.delete();
-                        message.channel.send(':negative_squared_cross_mark: | The command has been canceld.').then(msg => msg.delete(5000));
-                    })
-                }) // Alpha Codes Server.
-            }
-        }else if(getRole) {
-            var membersRole = message.guild.members.filter(m => m.roles.has(getRole.id) && !m.user.bot);
-            if(membersRole.size === 0) return message.channel.send(`:no_entry: | No members have **${getRole.name}** Role!`);
-           
-            let notArgsM = new Discord.RichEmbed()
-            .setTitle(`:white_check_mark: **BroadCast Command.** (${getRole.name})`)
-            .setColor('GREEN')
-            .setDescription(`**\n${prefix}bc <ROLE> <MESSAGE>**\n➥ \`\`Send the message to members have the role selected.\`\``)
-            .setTimestamp()
-            .setFooter(message.author.tag, message.author.avatarURL) // Alpha Codes Server.
-           
-            if(!argsM) return message.channel.send(notArgsM);
-           
-            let membersRoleMsg = new Discord.RichEmbed()
-            .setTitle(`:white_check_mark: **BroadCast Command.** (${getRole.name})`)
-            .setColor('GREEN')
-            .setDescription(`**\n**:red_circle: Are you sure to send the message to **${membersRole.size}** Members?\n\n**➥ Message:**\n${argsM}`)
-            .setTimestamp()
-            .setFooter(message.author.tag, message.author.avatarURL)
-           
-            message.channel.send(membersRoleMsg).then(msgB => {
-                msgB.react('✅').then(() => msgB.react('❎')) // Alpha Codes Server.
-               
-                let sendR = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
-                let dontSendR = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
-                let send = msgB.createReactionCollector(sendR);
-                let dontSend = msgB.createReactionCollector(dontSendR);
-               
-                send.on('collect', r => {
-                    msgB.delete(); // Alpha Codes Server.
-                    message.channel.send(`:timer: | Wait some time to send the message to **${membersRole.size}** Members ...`).then(msg => {
-                        membersRole.forEach(async mR => {
-                            let bcMessage = new Discord.RichEmbed()
-                            .setTitle(`:loudspeaker: ${mR.user.username}`)
-                            .setColor('GREEN')
-                            .addField(':pencil: **Sender:**', message.author.username, true)
-                            .addField(':globe_with_meridians: **Server:**', message.guild.name, true)
-                            .addField(':scroll: **Message:**', argsM.replace('[user]', mR))
-                            .setTimestamp()
-                            .setFooter(message.author.tag, message.author.avatarURL)
-                           
-                            mR.send(bcMessage)
-                            await msg.edit(`:white_check_mark: | <@${message.author.id}> Successfully send the message to **${membersRole.size}** Members!`); // Alpha Codes Server.
-                        })
-                    })
-                })
-                dontSend.on('collect', r => {
-                    msgB.delete();
-                    message.channel.send(':negative_squared_cross_mark: | The command has been canceld.').then(msg => msg.delete(5000));
-                })
-            })
-        }else if(args[1] !== 'admins' && args[1] !== 'members' && !getRole) {
-            var allB = message.guild.members.filter(m => !m.user.bot);
-            if(allB.size === 1) return message.channel.send(`:no_entry: | No members in this server!`);
-           
-            let allMsg = new Discord.RichEmbed() // Alpha Codes Server.
-            .setTitle(`:white_check_mark: **BroadCast Command.** (ALL)`)
-            .setColor('GREEN')
-            .setDescription(`**\n**:red_circle: Are you sure to send the message to **${allB.size}** Members?\n\n**➥ Message:**\n${argsM}`)
-            .setTimestamp()
-            .setFooter(message.author.tag, message.author.avatarURL) // Alpha Codes Server.
-           
-            message.channel.send(allMsg).then(msgB => {
-                msgB.react('✅').then(() => msgB.react('❎'))
-               
-                let sendR = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
-                let dontSendR = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
-                let send = msgB.createReactionCollector(sendR);
-                let dontSend = msgB.createReactionCollector(dontSendR); // Alpha Codes Server.
-               
-                send.on('collect', r => {
-                    msgB.delete();
-                    message.channel.send(`:timer: | Wait some time to send the message to **${allB.size}** Members ...`).then(msg => {
-                        allB.forEach(async m => {
-                            let bcMessage = new Discord.RichEmbed()
-                            .setTitle(`:loudspeaker: ${m.user.username}`) // Alpha Codes Server.
-                            .setColor('GREEN')
-                            .addField(':pencil: **Sender:**', message.author.username, true)
-                            .addField(':globe_with_meridians: **Server:**', message.guild.name, true)
-                            .addField(':scroll: **Message:**', argsM.replace('[user]', m))
-                            .setTimestamp()
-                            .setFooter(message.author.tag, message.author.avatarURL)
-                           
-                            m.send(bcMessage)
-                            await msg.edit(`:white_check_mark: | <@${message.author.id}> Successfully send the message to **${allB.size}** Members!`);
-                        })
-                    })
-                })
-                dontSend.on('collect', r => {
-                    msgB.delete();
-                    message.channel.send(':negative_squared_cross_mark: | The command has been canceld.').then(msg => msg.delete(5000));
-                })
-            })
-        }
-    }
-});
-
-client.on('ready', () => {
-   console.log(`----------------`);
-      console.log(`Desert Bot- Script By : Diamond Codes`);
-        console.log(`----------------`);
-      console.log(`ON ${client.guilds.size} Servers '     Script By : Diamond Codes ' `);
-    console.log(`----------------`);
-  console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`RoBx, | 1K"Sooon,`,"http://twitch.tv/S-F")
-client.user.setStatus("online")
- 
-});
 
 client.login(process.env.BOT_TOKEN);
