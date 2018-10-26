@@ -471,6 +471,7 @@ client.on("message", message => {
 !!server ➾ معلومات عن السيرفر
 !!bot ➾ معلومات عن البوت
 !!ping  ➾ لمعرفة سرعة نتك
+!!trg ➾ لعبة ترجمه
 =========================================================
 وقريباً المزيد من الاكواد
 =========================================================
@@ -499,6 +500,7 @@ Support server : https://discord.gg/sjHQUj
 !!avatar ➾ your profile avatar
 !!server ➾ server informations
 !!bot ➾ bot informations
+!!trg ➾ traduction game
 =========================================================
 More commands soon
 =========================================================
@@ -962,7 +964,14 @@ var tr =[
     {f:"اشرح Server",k:"خادم"},
     {n:"اشرح Dream",m:"احلام"},
     {n:"اشرح Fire",m:"نار"}
- 
+    {n:"اشرح dog",m:"كلب"}
+    {f:"اشرح cat",m:"قطه}
+    {n:"اشرح king",m:"ملك"}
+    {n:"اشرح school",m:"مدرسه"}
+    {n:"اشرح TV",m:"تلفاز"}
+    {n:"اشرح bed",m:"سرير"}
+    {n:"اشرح mike",m:"ميكروفون"}
+  
 ];
  
 const UserBlocked = new Set();  
