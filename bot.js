@@ -211,15 +211,25 @@ client.on('message', message => {
 
   let args = message.content.split(" ").slice(1);
 
-if (command == "!!say") {
-if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.reply("*لا تملك الصلاحيات المطلوبه**");
-
-message.channel.send(args.join("  "))
-    message.delete();
+  if (command == "!!say") {
+   message.channel.sendMessage(args.join("  "))
+   message.delete()
   }
+ });
 
-if(!args) return message.channel.send('!say <words>');
+client.on("message", (Duy0) => {
+  if (Duy0.content.startsWith('!!delete')) {
+      if (!Duy0.member.hasPermission('MANAGE_CHANNELS')) return Duy0.reply("انت لا تمتلك صلاحيه ``Manage_Channels`` لكي تقوم بحذف الروم");
+      if(!Duy0.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("انا لا امتلك صلايه ``Manage_Channels`` لكي اقوم بحذف الروم");
 
+
+
+      let Alpha = Duy0.content.split(' ').slice(1);
+      let channel = Duy0.client.channels.find('name', Alpha.join(' '));
+      if (!channel) return Duy0.reply('**لا يوجد روم بهذه الاسم**').catch(console.error);
+      channel.delete() 
+  Duy0.channel.send(`لقد تم مسح الروم`)
+}
 });
 
 client.on("guildMemberAdd", msg => {
@@ -286,6 +296,65 @@ Dat = currentTime.getDate()
   }
  
 });
+
+ client.on('message', async message =>{
+    if (message.author.boss) return;
+      var prefix = "!!";
+ 
+  if (!message.content.startsWith(prefix)) return;
+      let command = message.content.split(" ")[0];
+       command = command.slice(prefix.length);
+      let args = message.content.split(" ").slice(1);
+      if (command == "mute") {
+          if (!message.channel.guild) return;
+          if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.reply("انت لا تملك صلاحيات !! ").then(msg => msg.delete(5000));
+          if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("البوت لايملك صلاحيات ").then(msg => msg.delete(5000));;
+          let user = message.mentions.users.first();
+          let muteRole = message.guild.roles.find("name", "Muted");
+          if (!muteRole) return message.reply("** لا يوجد رتبة الميوت 'Muted' **").then(msg => {msg.delete(5000)});
+          if (message.mentions.users.size < 1) return message.reply('** يجب عليك المنشن اولاً **').then(msg => {msg.delete(5000)});
+          let reason = message.content.split(" ").slice(2).join(" ");
+          message.guild.member(user).addRole(muteRole);
+          const muteembed = new Discord.RichEmbed()
+          .setColor("RANDOM")
+          .setAuthor(`Muted!`, user.displayAvatarURL)
+          .setThumbnail(user.displayAvatarURL)
+          .addField("**:busts_in_silhouette:  المستخدم**",  '**[ ' + `${user.tag}` + ' ]**',true)
+          .addField("**:hammer:  تم بواسطة **", '**[ ' + `${message.author.tag}` + ' ]**',true)
+          .addField("**:book:  السبب**", '**[ ' + `${reason}` + ' ]**',true)
+          .addField("User", user, true)
+          message.channel.send({embed : muteembed});
+          var muteembeddm = new Discord.RichEmbed()
+          .setAuthor(`Muted!`, user.displayAvatarURL)
+          .setDescription(`      
+  ${user} انت معاقب بميوت كتابي بسبب مخالفة القوانين
+  ${message.author.tag} تمت معاقبتك بواسطة
+  [ ${reason} ] : السبب
+  اذا كانت العقوبة عن طريق الخطأ تكلم مع المسؤلين
+  `)
+          .setFooter(`في سيرفر : ${message.guild.name}`)
+          .setColor("RANDOM")
+      user.send( muteembeddm);
+    }
+  if(command === `unmute`) {
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("**ليس لديك صلاحية لفك عن الشخص ميوت**:x: ").then(m => m.delete(5000));
+  if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("**ما عندي برمشن**").then(msg => msg.delete(6000))
+ 
+    let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!toMute) return message.channel.sendMessage("**عليك المنشن أولاّ**:x: ");
+ 
+    let role = message.guild.roles.find (r => r.name === "Muted");
+   
+    if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage("**لم يتم اعطاء هذه شخص ميوت من الأساس**:x:")
+ 
+    await toMute.removeRole(role)
+    message.channel.sendMessage("**لقد تم فك الميوت عن شخص بنجاح**:white_check_mark:");
+ 
+    return;
+ 
+    }
+ 
+  });
 
 client.on('message', message => {
     if (message.content.startsWith("!!avatar")) {
@@ -458,6 +527,7 @@ Support server : https://discord.gg/sjHQUj
 !!move [@mention] ➾ لنقل عضو لرومك الصوتي
 !!mutechannel ➾ لاقفال الشات
 !!unmutechannel ➾ لفتح الشات
+!!delete #channel ➾ لمحو الشات
 !!clear  ➾ لمسح الشات
 !!role [@mention] [role name] ➾ لاعطاء رتبة لعضو
 =========================================================
@@ -487,6 +557,7 @@ const embed = new Discord.RichEmbed()
 !!move [@mention] ➾ to move someone to your channel
 !!mutechannel ➾ to mute chat
 !!unmutechannel ➾ to ummute chat
+!!delete #channel ➾ to delete chat
 !!clear ➾ to clear chat
 !!role [@mention] [role name] ➾ to give role fo someone
 =========================================================
