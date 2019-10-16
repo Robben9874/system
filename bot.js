@@ -475,7 +475,7 @@ client.on("message", message => {
 =========================================================
 وقريباً المزيد من الاكواد
 =========================================================
-Support server : https://discord.gg/sjHQUj
+
 `)
    message.author.sendEmbed(embed)
    
@@ -504,7 +504,7 @@ Support server : https://discord.gg/sjHQUj
 =========================================================
 More commands soon
 =========================================================
-Support server : https://discord.gg/sjHQUj
+
 `)
    message.author.sendEmbed(embed)
    
@@ -534,7 +534,7 @@ Support server : https://discord.gg/sjHQUj
 =========================================================
 وقريباً المزيد من الاكواد
 =========================================================
-Support server :  https://discord.gg/sjHQUj
+
 `)
    message.author.sendEmbed(embed)
    
@@ -564,7 +564,7 @@ const embed = new Discord.RichEmbed()
 =========================================================
 More commands soon
 =========================================================
-Support server : https://discord.gg/sjHQUj
+
 `)
 message.author.sendEmbed(embed)
  
@@ -591,7 +591,7 @@ client.on("message", message => {
 =========================================================
 وقريباً المزيد من الاكواد
 =========================================================
-Support server : https://discord.gg/sjHQUj
+
 `)
    message.author.sendEmbed(embed)
    
@@ -618,7 +618,7 @@ client.on("message", message => {
 =========================================================
 More codes soon
 =========================================================
-Support server : https://discord.gg/sjHQUj
+
 `)
    message.author.sendEmbed(embed)
    
